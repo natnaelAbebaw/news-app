@@ -77,11 +77,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget build(BuildContext context) {
     var newsInfo = context.watch<NewsInfoBloc>().state.newsinfo;
-    BlocProvider.of<NewsFirstBloc>(context).add(LoadNewses(
+    // BlocProvider.of<NewsFirstBloc>(context).add(LoadNewses(
+    //     {"country": newsInfo.countryCode, "language": newsInfo.languageCode}));
+    BlocProvider.of<NewsSecondBloc>(context).add(LoadHottestNewsEvent(
         {"country": newsInfo.countryCode, "language": newsInfo.languageCode}));
-
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.black),
+          elevation: 0,
+          actions: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.search))
+          ],
+        ),
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,

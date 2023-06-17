@@ -25,7 +25,7 @@ class NewsProvider {
 
     var response = await http.get(Uri.parse(uri), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
-      "Authorization": "Bearer ea4f33abb959414db4a448cbd72e6f94"
+      "Authorization": "Bearer 642982a71e5943f2abd36e38a888f429"
     });
 
     if (response.statusCode == 200) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:news_app/news/models/newsModel.dart';
 import './news/screens/screens.dart';
 import './news/bloc/bloc.dart';
 import './news/repository/news_repository.dart';
@@ -22,10 +23,14 @@ class MyApp extends StatelessWidget {
         path: '/',
         builder: (context, state) => HomeScreen(),
       ),
-      // GoRoute(
-      // path: '/newsDetails',
-      // builder: (context, state) => NewsDetails(),
-      // ),
+      GoRoute(
+        path: '/newsDetalis',
+        name: 'newsDetalis',
+        builder: (context, state) {
+          News news = state.extra as News; // -> casting is important
+          return NewsDetails(news: news);
+        },
+      ),
     ],
   );
 
@@ -49,7 +54,11 @@ class MyApp extends StatelessWidget {
         routerConfig: router,
         title: 'Schedule Board',
         theme: ThemeData(
-          primarySwatch: Colors.purple,
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: Colors.grey[100],
+            secondary: Colors.purple.shade700,
+            // or from RGB
+          ),
         ),
       ),
     );
