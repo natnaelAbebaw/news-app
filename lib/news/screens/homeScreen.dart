@@ -21,7 +21,7 @@ enum Page {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Page _currentPage = Page.Home;
-
+  String selectedCountry = "USA";
   void _onTabTapped(Page page) {
     setState(() {
       _currentPage = page;
@@ -50,9 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
       case Page.Search:
         icon = Icons.language;
         break;
-      case Page.Profile:
-        icon = Icons.bookmark;
-        break;
       default:
         icon = Icons.home;
     }
@@ -77,55 +74,91 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget build(BuildContext context) {
     var newsInfo = context.watch<NewsInfoBloc>().state.newsinfo;
-    // BlocProvider.of<NewsFirstBloc>(context).add(LoadNewses(
-    //     {"country": newsInfo.countryCode, "language": newsInfo.languageCode}));
-    BlocProvider.of<NewsSecondBloc>(context).add(LoadHottestNewsEvent(
-        {"country": newsInfo.countryCode, "language": newsInfo.languageCode}));
+    BlocProvider.of<NewsFirstBloc>(context).add(LoadNewses({
+      "language": newsInfo.languageCode,
+      "resource": "everything",
+      "searchPhrase": "news"
+    }));
+    BlocProvider.of<NewsSecondBloc>(context).add(LoadHottestNewsEvent({
+      "country": newsInfo.countryCode,
+      "language": newsInfo.languageCode,
+    }));
     return Scaffold(
         appBar: AppBar(
+          leading: const Icon(
+            Icons.public,
+            size: 30,
+            color: Colors.purple,
+          ),
+          title: const Text("News", style: TextStyle(color: Colors.purple)),
           iconTheme: const IconThemeData(color: Colors.black),
           elevation: 0,
-          actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search))
-          ],
         ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text(
-                  'Home News',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-              ListTile(
-                title: const Text('Language'),
-                onTap: () {
-                  // Handle item 1 tap
-                },
-              ),
-              ListTile(
-                title: const Text('Country'),
-                onTap: () {
-                  // Handle item 2 tap
-                },
-              ),
-              ListTile(
-                title: const Text('Dark mode'),
-                onTap: () {
-                  // Handle item 2 tap
-                },
-              ),
-            ],
-          ),
-        ),
+        // drawer: Drawer(
+        //   child: ListView(
+        //     padding: EdgeInsets.zero,
+        //     children: [
+        //       const DrawerHeader(
+        //         decoration: BoxDecoration(
+        //           color: Colors.blue,
+        //         ),
+        //         child: Text(
+        //           'Home News',
+        //           style: TextStyle(
+        //             color: Colors.white,
+        //             fontSize: 24,
+        //           ),
+        //         ),
+        //       ),
+        //       Container(
+        //         width: 200,
+        //         child: Row(
+        //           children: [
+        //             Expanded(child: const Icon(Icons.language)),
+        //             Expanded(
+        //               child: const SizedBox(
+        //                 width: 10,
+        //               ),
+        //             ),
+        //             // Expanded(child: const Text('Language')),
+        //             Expanded(
+        //               child: DropdownButtonFormField(
+        //                 value: selectedCountry,
+        //                 items: countryMap.keys.map((String country) {
+        //                   return DropdownMenuItem(
+        //                     value: country,
+        //                     child: Text(country),
+        //                   );
+        //                 }).toList(),
+        //                 onChanged: (value) {
+        //                   if (value != null) {
+        //                     BlocProvider.of<NewsInfoBloc>(context)
+        //                         .add(ChangeCountryEvent(countryMap[value]!));
+        //                   }
+        //                   setState(() {
+        //                     selectedCountry = value.toString();
+        //                   });
+        //                 },
+        //                 decoration: const InputDecoration(
+        //                   labelText: 'country',
+        //                 ),
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //       ListTile(
+        //         title: const Text('Country'),
+        //         onTap: () {
+        //         },
+        //       ),
+        //       ListTile(
+        //         onTap: () {
+        //           // Handle item 2 tap        //         },
+        //       ),
+        //     ],
+        //   ),
+        // ),
         body: _getPage(),
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
@@ -136,7 +169,6 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 selectedBar(Page.Home),
                 selectedBar(Page.Search),
-                selectedBar(Page.Profile)
               ],
             ),
           ),

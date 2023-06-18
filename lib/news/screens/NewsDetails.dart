@@ -69,12 +69,6 @@ class NewsDetails extends StatelessWidget {
                               Icons.arrow_back,
                               color: Colors.white,
                             )),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.bookmark,
-                              color: Colors.white,
-                            )),
                       ],
                     ),
                   ),
@@ -162,9 +156,10 @@ class NewsDetails extends StatelessWidget {
                               news.sourceName!.length <= 20
                                   ? news.sourceName!
                                   : "${news.sourceName!.substring(0, 20)}...",
-                              style: TextStyle(
-                                color: Colors.grey[600],
+                              style: const TextStyle(
+                                color: Colors.purple,
                                 fontSize: 14,
+                                fontWeight: FontWeight.normal,
                                 decoration: TextDecoration.none,
                               )),
                         )
@@ -179,6 +174,7 @@ class NewsDetails extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.grey[600],
                                 fontSize: 14,
+                                fontWeight: FontWeight.normal,
                                 decoration: TextDecoration.none,
                               )),
                         )
@@ -195,17 +191,16 @@ class NewsDetails extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               // height: 70,
               child: news.title != null
-                  ? Text(
-                      news.title!,
+                  ? Text(news.title!,
                       style: TextStyle(
                         color: Colors.grey[900],
-                        fontSize: 30,
-                        letterSpacing: 1.7,
-                        height: 1.2,
+                        fontSize: 24,
+                        letterSpacing: 1.5,
+                        height: 1.1,
                         fontWeight: FontWeight.w900,
                         decoration: TextDecoration.none,
                       ),
-                    )
+                      textAlign: TextAlign.center)
                   : const Text("CNN"),
             ),
             const SizedBox(
@@ -214,12 +209,13 @@ class NewsDetails extends StatelessWidget {
             news.description != null
                 ? Container(
                     width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(16),
                     child: Text(news.description!,
                         style: TextStyle(
-                          color: Colors.grey[800],
+                          color: Colors.grey[600],
                           letterSpacing: 2,
                           height: 1.5,
+                          fontWeight: FontWeight.normal,
                           decoration: TextDecoration.none,
                           fontSize: 16,
                         ),
